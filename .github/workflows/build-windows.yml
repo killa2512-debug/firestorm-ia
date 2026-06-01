@@ -56,7 +56,10 @@ jobs:
           autobuild configure -c ReleaseOS -- `
             -DADDRESS_SIZE=64 `
             -DLL_TESTS=OFF `
-            -DPACKAGE=ON
+            -DPACKAGE=ON `
+            -DUSE_FMODSTUDIO=OFF `
+            -DUSE_KDU=FALSE `
+            -DUSE_OPENAL=ON
 
       - name: Build Firestorm
         shell: pwsh

@@ -865,64 +865,6 @@
         <key>description</key>
         <string>Expat is an XML parser library written in C</string>
       </map>
-      <key>fmodstudio</key>
-      <map>
-        <key>platforms</key>
-        <map>
-          <key>darwin64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>19e40aa358c1784b49eccd547e704647</string>
-              <key>hash_algorithm</key>
-              <string>md5</string>
-              <key>url</key>
-              <string>file:///opt/firestorm/fmodstudio-2.03.07-darwin64-251121740.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>darwin64</string>
-          </map>
-          <key>linux64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>a459e2967306ff56a835a321dc00718c</string>
-              <key>hash_algorithm</key>
-              <string>md5</string>
-              <key>url</key>
-              <string>file:///opt/firestorm/fmodstudio-2.03.07-linux64-251121739.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>linux64</string>
-          </map>
-          <key>windows64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>4a0da36b4a31332df62dadf6438f935e</string>
-              <key>url</key>
-              <string>file:///c:/cygwin/opt/firestorm/fmodstudio-2.03.07-windows64-251121127.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>windows64</string>
-          </map>
-        </map>
-        <key>license</key>
-        <string>fmod</string>
-        <key>license_file</key>
-        <string>LICENSES/fmodstudio.txt</string>
-        <key>copyright</key>
-        <string>FMOD Studio by Firelight Technologies Pty Ltd.</string>
-        <key>version</key>
-        <string>2.02.20</string>
-        <key>name</key>
-        <string>fmodstudio</string>
-        <key>description</key>
-        <string>FMOD Studio API</string>
-      </map>
       <key>freetype</key>
       <map>
         <key>platforms</key>
@@ -1270,60 +1212,6 @@
         <string>https://github.com/secondlife/3p-libjpeg-turbo</string>
         <key>description</key>
         <string>JPEG encoding, decoding library</string>
-      </map>
-      <key>kdu</key>
-      <map>
-        <key>platforms</key>
-        <map>
-          <key>darwin64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>68b1eae7b0f0b1c689f867ccc0045816</string>
-              <key>url</key>
-              <string>file:///opt/firestorm/kdu-8.6.1-darwin64-260220143.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>darwin64</string>
-          </map>
-          <key>linux64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>b06b152529a216491b954bc91850de0c</string>
-              <key>url</key>
-              <string>file:///opt/firestorm/kdu-8.6.1-linux64-260220142.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>linux64</string>
-          </map>
-          <key>windows64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>7b042bef7b06f122ac9755c02ee40f7d</string>
-              <key>url</key>
-              <string>file:///c:/cygwin/opt/firestorm/kdu-8.6.1-windows64-260220142.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>windows64</string>
-          </map>
-        </map>
-        <key>license</key>
-        <string>Kakadu</string>
-        <key>license_file</key>
-        <string>LICENSES/kdu.txt</string>
-        <key>copyright</key>
-        <string>Kakadu software</string>
-        <key>version</key>
-        <string>8.6</string>
-        <key>name</key>
-        <string>kdu</string>
-        <key>description</key>
-        <string>JPEG2000 library by Kakadu</string>
       </map>
       <key>libhunspell</key>
       <map>
@@ -1673,58 +1561,6 @@
         <string>1.0.11137145495</string>
         <key>name</key>
         <string>llphysicsextensions_source</string>
-      </map>
-      <key>llphysicsextensions_tpv</key>
-      <map>
-        <key>platforms</key>
-        <map>
-          <key>darwin64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>9520266bd701bddeaa1982c40f11220c</string>
-              <key>url</key>
-              <string>file:///opt/firestorm/llphysicsextensions_tpv-1.0.12401597145-darwin64-12401597145.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>darwin64</string>
-          </map>
-          <key>linux64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>711f4ec769e4b5f59ba25ee43c11bcbc</string>
-              <key>url</key>
-              <string>https://automated-builds-secondlife-com.s3.amazonaws.com/ct2/4724/14846/llphysicsextensions_stub-1.0.504712-linux64-504712.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>linux64</string>
-          </map>
-          <key>windows64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>ab4b9d3ff7b6b53f1ab6d9d3bef012da</string>
-              <key>url</key>
-              <string>file:///c:/cygwin/opt/firestorm/llphysicsextensions_tpv-1.0.12401597145-windows64-12401597145.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>windows</string>
-          </map>
-        </map>
-        <key>license</key>
-        <string>internal</string>
-        <key>license_file</key>
-        <string>LICENSES/HavokSublicense.pdf</string>
-        <key>copyright</key>
-        <string>Copyright (c) 2010, Linden Research, Inc.</string>
-        <key>version</key>
-        <string>1.0.577418</string>
-        <key>name</key>
-        <string>llphysicsextensions_tpv</string>
       </map>
       <key>mesa</key>
       <map>
