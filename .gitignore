@@ -13,6 +13,8 @@
 *.depend
 *.stamp
 *.rc
+!indra/newview/res/viewerRes.rc
+!indra/llcommon/res/llcommon.rc.in
 
 *.tar.bz2
 *.code-workspace
