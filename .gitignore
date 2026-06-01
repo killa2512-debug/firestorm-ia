@@ -51,7 +51,7 @@ indra/newview/app_settings/static_*.db2
 indra/newview/avatar_icons_cache.txt
 indra/newview/avatar_lad.log
 indra/newview/browser_profile
-indra/newview/character
+# indra/newview/character  -- needed for Windows build
 indra/newview/dbghelp.dll
 indra/newview/filters.xml
 indra/newview/fmod.dll
