@@ -10,6 +10,9 @@ jobs:
     runs-on: windows-2022
     timeout-minutes: 240
 
+    env:
+      LL_BUILD: /O2 /Ob2 /GR /W3 /c /Zi /nologo /DWIN32 /D_WINDOWS /arch:SSE2
+
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -27,36 +30,52 @@ jobs:
         with:
           arch: amd64
 
+      - name: Install prebuilt dependencies
+        shell: pwsh
+        run: |
+          $maxAttempts = 5
+          for ($i = 1; $i -le $maxAttempts; $i++) {
+            Write-Host "Attempt $i of $maxAttempts: autobuild install..."
+            autobuild install --install-dir="$env:GITHUB_WORKSPACE\packages"
+            if ($LASTEXITCODE -eq 0) {
+              Write-Host "Dependencies installed successfully."
+              break
+            }
+            if ($i -lt $maxAttempts) {
+              Write-Host "Failed (exit $LASTEXITCODE), retrying in 15s..."
+              Start-Sleep -Seconds 15
+            } else {
+              Write-Host "All attempts failed."
+              exit 1
+            }
+          }
+
       - name: Configure build
-        env:
-          LL_BUILD: /O2 /Ob2 /GR /W3 /c /Zi /nologo /DWIN32 /D_WINDOWS /arch:SSE2
+        shell: pwsh
         run: |
           autobuild configure -c ReleaseOS -- `
             -DADDRESS_SIZE=64 `
             -DLL_TESTS=OFF `
             -DPACKAGE=ON
-        shell: pwsh
 
       - name: Build Firestorm
-        env:
-          LL_BUILD: /O2 /Ob2 /GR /W3 /c /Zi /nologo /DWIN32 /D_WINDOWS /arch:SSE2
-        run: |
-          autobuild build -c ReleaseOS
         shell: pwsh
+        run: |
+          autobuild build -c ReleaseOS --no-configure
 
       - name: Find and collect artifacts
+        shell: pwsh
         run: |
-          $exe = Get-ChildItem -Recurse -Filter "*.exe" | Where-Object { $_.Name -like "Firestorm*" } | Select-Object -First 1
+          $exe = Get-ChildItem -Recurse -Filter "*.exe" | Where-Object { $_.Name -like "Firestorm*" -or $_.Name -like "firestorm*" } | Select-Object -First 1
           if ($exe) {
             Copy-Item $exe.FullName -Destination "FirestormIA-Windows.exe"
-            echo "Found: $($exe.FullName)"
+            Write-Host "Found installer: $($exe.FullName)"
           }
-          # Collect all build output
           $buildDir = Get-ChildItem -Recurse -Directory -Filter "newview" | Select-Object -First 1
           if ($buildDir) {
-            Compress-Archive -Path "$($buildDir.FullName)\*" -DestinationPath "FirestormIA-Windows-full.zip"
+            Write-Host "Packaging build dir: $($buildDir.FullName)"
+            Compress-Archive -Path "$($buildDir.FullName)\*" -DestinationPath "FirestormIA-Windows-full.zip" -CompressionLevel Fastest
           }
-        shell: pwsh
 
       - name: Upload installer artifact
         uses: actions/upload-artifact@v4
@@ -66,6 +85,7 @@ jobs:
             FirestormIA-Windows.exe
             FirestormIA-Windows-full.zip
           retention-days: 30
+          if-no-files-found: warn
 
       - name: Upload build logs on failure
         if: failure()
@@ -73,6 +93,8 @@ jobs:
         with:
           name: build-logs
           path: |
-            **/*.log
-            **/CMakeFiles/**/*.log
+            build-*/**/*.log
+            build-*/**/CMakeFiles/**/*.log
+            build-*/**/CMakeCache.txt
           retention-days: 7
+          if-no-files-found: ignore
