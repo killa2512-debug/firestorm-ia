@@ -35,7 +35,7 @@ jobs:
         run: |
           $maxAttempts = 5
           for ($i = 1; $i -le $maxAttempts; $i++) {
-            Write-Host "Attempt $i of $maxAttempts: autobuild install..."
+            Write-Host "Attempt $i of ${maxAttempts}: autobuild install..."
             autobuild install --install-dir="$env:GITHUB_WORKSPACE\packages"
             if ($LASTEXITCODE -eq 0) {
               Write-Host "Dependencies installed successfully."
