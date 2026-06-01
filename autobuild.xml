@@ -1031,68 +1031,6 @@
         <key>source_type</key>
         <string>git</string>
       </map>
-      <key>havok-source</key>
-      <map>
-        <key>platforms</key>
-        <map>
-          <key>darwin64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>creds</key>
-              <string>github</string>
-              <key>hash</key>
-              <string>ae2c2a215b1bc2e3f37a67e301926dc405902d1a</string>
-              <key>hash_algorithm</key>
-              <string>sha1</string>
-              <key>url</key>
-              <string>https://api.github.com/repos/secondlife/3p-havok-source/releases/assets/136778143</string>
-            </map>
-            <key>name</key>
-            <string>darwin64</string>
-          </map>
-          <key>linux64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>00d0333936a67059a43a6ec8ac38d564</string>
-              <key>url</key>
-              <string>http://s3-proxy.lindenlab.com/private-builds-secondlife-com/ct2/748/1563/havok_source-2012.1-2-linux64-500739.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>linux64</string>
-          </map>
-          <key>windows64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>creds</key>
-              <string>github</string>
-              <key>hash</key>
-              <string>0393dd75c58f7046bed47e62a8884a78cb02a5c3</string>
-              <key>hash_algorithm</key>
-              <string>sha1</string>
-              <key>url</key>
-              <string>https://api.github.com/repos/secondlife/3p-havok-source/releases/assets/136778145</string>
-            </map>
-            <key>name</key>
-            <string>windows64</string>
-          </map>
-        </map>
-        <key>license</key>
-        <string>havok</string>
-        <key>license_file</key>
-        <string>LICENSES/havok.txt</string>
-        <key>copyright</key>
-        <string>Uses Havok (TM) Physics. (c)Copyright 1999-2010 Havok.com Inc. (and its Licensors). All Rights Reserved. See www.havok.com for details.</string>
-        <key>version</key>
-        <string>2012.1-2</string>
-        <key>name</key>
-        <string>havok-source</string>
-        <key>description</key>
-        <string>Havok source code for libs and demos</string>
-      </map>
       <key>jpegencoderbasic</key>
       <map>
         <key>platforms</key>
@@ -1469,36 +1407,6 @@
         <key>description</key>
         <string>Libxml2 is the XML C parser and toolkit developed for the Gnome project.</string>
       </map>
-      <key>llappearance_utility</key>
-      <map>
-        <key>platforms</key>
-        <map>
-          <key>linux</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>hash</key>
-              <string>613390e5967760516239a2d661920d3d</string>
-              <key>url</key>
-              <string>http://s3-proxy.lindenlab.com/private-builds-secondlife-com/hg/repo/oz_llappearance_utility/rev/324003/arch/Linux/installer/llappearance_utility-0.0.1-linux-324003.tar.bz2</string>
-            </map>
-            <key>name</key>
-            <string>linux</string>
-          </map>
-        </map>
-        <key>license</key>
-        <string>Proprietary</string>
-        <key>license_file</key>
-        <string>LICENSES/llappearanceutility.txt</string>
-        <key>copyright</key>
-        <string>Copyright (c) 2000-2012, Linden Research, Inc.</string>
-        <key>version</key>
-        <string>0.0.1</string>
-        <key>name</key>
-        <string>llappearance_utility</string>
-        <key>description</key>
-        <string>Linden Lab appearance utility for server-side avatar baking services.</string>
-      </map>
       <key>llca</key>
       <map>
         <key>platforms</key>
@@ -1529,38 +1437,6 @@
         <string>202407221423.0</string>
         <key>name</key>
         <string>llca</string>
-      </map>
-      <key>llphysicsextensions_source</key>
-      <map>
-        <key>platforms</key>
-        <map>
-          <key>common</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>creds</key>
-              <string>github</string>
-              <key>hash</key>
-              <string>fff82c79edb900c547c40dca9a0e3ebac5a8c7da</string>
-              <key>hash_algorithm</key>
-              <string>sha1</string>
-              <key>url</key>
-              <string>https://api.github.com/repos/secondlife/llphysicsextensions_source/releases/assets/299858950</string>
-            </map>
-            <key>name</key>
-            <string>common</string>
-          </map>
-        </map>
-        <key>license</key>
-        <string>internal</string>
-        <key>license_file</key>
-        <string>LICENSES/llphysicsextensions.txt</string>
-        <key>copyright</key>
-        <string>Copyright (c) 2010, Linden Research, Inc.</string>
-        <key>version</key>
-        <string>1.0.11137145495</string>
-        <key>name</key>
-        <string>llphysicsextensions_source</string>
       </map>
       <key>mesa</key>
       <map>
@@ -2924,64 +2800,6 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
         <string>tinyexr import library</string>
         <key>source_type</key>
         <string>git</string>
-      </map>
-      <key>discord_sdk</key>
-      <map>
-        <key>platforms</key>
-        <map>
-          <key>windows64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>creds</key>
-              <string>github</string>
-              <key>hash</key>
-              <string>e11571bf76b27d15c244069988ae372eaa5afae9</string>
-              <key>hash_algorithm</key>
-              <string>sha1</string>
-              <key>url</key>
-              <string>https://api.github.com/repos/secondlife/3p-discord-sdk/releases/assets/279333720</string>
-            </map>
-            <key>name</key>
-            <string>windows64</string>
-          </map>
-          <key>darwin64</key>
-          <map>
-            <key>archive</key>
-            <map>
-              <key>creds</key>
-              <string>github</string>
-              <key>hash</key>
-              <string>dc21df8b051c425163acf3eff8f06e32f407c9e0</string>
-              <key>hash_algorithm</key>
-              <string>sha1</string>
-              <key>url</key>
-              <string>https://api.github.com/repos/secondlife/3p-discord-sdk/releases/assets/279333706</string>
-            </map>
-            <key>name</key>
-            <string>darwin64</string>
-          </map>
-        </map>
-        <key>license</key>
-        <string>discord_sdk</string>
-        <key>license_file</key>
-        <string>LICENSES/discord_sdk.txt</string>
-        <key>copyright</key>
-        <string>Discord Inc.</string>
-        <key>version</key>
-        <string>1.4.9649.16733550144</string>
-        <key>name</key>
-        <string>discord_sdk</string>
-        <key>vcs_branch</key>
-        <string>main</string>
-        <key>vcs_revision</key>
-        <string>ef5c7c4a490ceac2df2b2f046788b1daf1bbb392</string>
-        <key>vcs_url</key>
-        <string>https://github.com/secondlife/3p-discord-sdk</string>
-        <key>canonical_repo</key>
-        <string>https://github.com/secondlife/3p-discord-sdk</string>
-        <key>description</key>
-        <string>Discord Social SDK</string>
       </map>
       <key>vhacd</key>
       <map>
