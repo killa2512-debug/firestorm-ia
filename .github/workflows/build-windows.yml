@@ -1,0 +1,74 @@
+name: Build FirestormIA Windows
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-2022
+    timeout-minutes: 240
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install autobuild
+        run: pip install autobuild
+
+      - name: Set up Visual Studio environment
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: amd64
+
+      - name: Configure build
+        run: |
+          autobuild configure -c ReleaseOS -- `
+            -DADDRESS_SIZE=64 `
+            -DLL_TESTS=OFF `
+            -DPACKAGE=ON
+        shell: pwsh
+
+      - name: Build Firestorm
+        run: |
+          autobuild build -c ReleaseOS
+        shell: pwsh
+
+      - name: Find and collect artifacts
+        run: |
+          $exe = Get-ChildItem -Recurse -Filter "*.exe" | Where-Object { $_.Name -like "Firestorm*" } | Select-Object -First 1
+          if ($exe) {
+            Copy-Item $exe.FullName -Destination "FirestormIA-Windows.exe"
+            echo "Found: $($exe.FullName)"
+          }
+          # Collect all build output
+          $buildDir = Get-ChildItem -Recurse -Directory -Filter "newview" | Select-Object -First 1
+          if ($buildDir) {
+            Compress-Archive -Path "$($buildDir.FullName)\*" -DestinationPath "FirestormIA-Windows-full.zip"
+          }
+        shell: pwsh
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FirestormIA-Windows
+          path: |
+            FirestormIA-Windows.exe
+            FirestormIA-Windows-full.zip
+          retention-days: 30
+
+      - name: Upload build logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: |
+            **/*.log
+            **/CMakeFiles/**/*.log
+          retention-days: 7
