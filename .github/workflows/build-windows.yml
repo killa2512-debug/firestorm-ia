@@ -28,6 +28,8 @@ jobs:
           arch: amd64
 
       - name: Configure build
+        env:
+          LL_BUILD: /O2 /Ob2 /GR /W3 /c /Zi /nologo /DWIN32 /D_WINDOWS /arch:SSE2
         run: |
           autobuild configure -c ReleaseOS -- `
             -DADDRESS_SIZE=64 `
@@ -36,6 +38,8 @@ jobs:
         shell: pwsh
 
       - name: Build Firestorm
+        env:
+          LL_BUILD: /O2 /Ob2 /GR /W3 /c /Zi /nologo /DWIN32 /D_WINDOWS /arch:SSE2
         run: |
           autobuild build -c ReleaseOS
         shell: pwsh
