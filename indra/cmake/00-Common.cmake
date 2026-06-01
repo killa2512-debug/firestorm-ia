@@ -87,6 +87,8 @@ if (WINDOWS)
 
   add_compile_definitions(
       LL_WINDOWS=1
+      UNICODE
+      _UNICODE
       WIN32_LEAN_AND_MEAN
       NOMINMAX
 #     DOM_DYNAMIC                     # For shared library colladadom
