@@ -3,12 +3,15 @@ name: Build FirestormIA Windows
 on:
   push:
     branches: [ main ]
+    tags: [ 'v*' ]
   workflow_dispatch:
 
 jobs:
   build-windows:
     runs-on: windows-2022
     timeout-minutes: 240
+    permissions:
+      contents: write
 
     env:
       LL_BUILD: /O2 /Ob2 /GR /W3 /c /Zi /nologo /DWIN32 /D_WINDOWS /arch:SSE2
@@ -66,29 +69,89 @@ jobs:
         run: |
           autobuild build -c ReleaseOS --no-configure
 
-      - name: Find and collect artifacts
+      - name: Build NSIS installer
         shell: pwsh
         run: |
-          $exe = Get-ChildItem -Recurse -Filter "*.exe" | Where-Object { $_.Name -like "Firestorm*" -or $_.Name -like "firestorm*" } | Select-Object -First 1
-          if ($exe) {
-            Copy-Item $exe.FullName -Destination "FirestormIA-Windows.exe"
-            Write-Host "Found installer: $($exe.FullName)"
+          # Find viewer output directory (contains Firestorm-Releasex64.exe)
+          $viewerDir = Get-ChildItem -Path . -Recurse -Directory -ErrorAction SilentlyContinue |
+            Where-Object { Test-Path (Join-Path $_.FullName "Firestorm-Releasex64.exe") } |
+            Select-Object -First 1
+
+          if (-not $viewerDir) {
+            # Fallback: any dir with a Firestorm*.exe larger than 20MB
+            $exe = Get-ChildItem -Path . -Recurse -Filter "Firestorm*.exe" -ErrorAction SilentlyContinue |
+              Where-Object { $_.Length -gt 20MB } |
+              Select-Object -First 1
+            if ($exe) { $viewerDir = $exe.Directory }
           }
-          $buildDir = Get-ChildItem -Recurse -Directory -Filter "newview" | Select-Object -First 1
-          if ($buildDir) {
-            Write-Host "Packaging build dir: $($buildDir.FullName)"
-            Compress-Archive -Path "$($buildDir.FullName)\*" -DestinationPath "FirestormIA-Windows-full.zip" -CompressionLevel Fastest
+
+          if (-not $viewerDir) {
+            Write-Error "No se encontro el directorio del visor compilado"
+            exit 1
           }
+
+          Write-Host "Directorio del visor: $($viewerDir.FullName)"
+
+          # Stage
+          $stage = "nsis-stage"
+          New-Item -ItemType Directory -Force -Path "$stage\FirestormIA" | Out-Null
+          Copy-Item "$($viewerDir.FullName)\*" "$stage\FirestormIA\" -Recurse -Force
+
+          Copy-Item "windows-installer\firestorm-ia.nsi"   "$stage\"
+          Copy-Item "windows-installer\groq-translate.py"  "$stage\"
+          Copy-Item "windows-installer\setup.py"           "$stage\"
+          Copy-Item "windows-installer\lanzar.bat"         "$stage\"
+          Copy-Item "windows-installer\lanzar.vbs"         "$stage\"
+          Copy-Item "windows-installer\assets"             "$stage\" -Recurse -Force
+
+          # NSIS (pre-instalado en windows-2022, si no usar choco)
+          $makensis = "C:\Program Files (x86)\NSIS\makensis.exe"
+          if (-not (Test-Path $makensis)) {
+            Write-Host "Instalando NSIS..."
+            choco install nsis -y --no-progress | Out-Null
+          }
+
+          Write-Host "Compilando instalador NSIS..."
+          Push-Location $stage
+          & $makensis firestorm-ia.nsi
+          if ($LASTEXITCODE -ne 0) { Write-Error "makensis fallo"; exit 1 }
+          Pop-Location
+
+          Move-Item "$stage\FirestormIA-Setup.exe" "FirestormIA-Setup.exe"
+          $sizeMB = [math]::Round((Get-Item "FirestormIA-Setup.exe").Length / 1MB, 1)
+          Write-Host "Instalador creado: FirestormIA-Setup.exe ($sizeMB MB)"
 
       - name: Upload installer artifact
         uses: actions/upload-artifact@v4
         with:
-          name: FirestormIA-Windows
-          path: |
-            FirestormIA-Windows.exe
-            FirestormIA-Windows-full.zip
+          name: FirestormIA-Windows-Installer
+          path: FirestormIA-Setup.exe
           retention-days: 30
-          if-no-files-found: warn
+          if-no-files-found: error
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: FirestormIA-Setup.exe
+          name: FirestormIA ${{ github.ref_name }}
+          body: |
+            ## FirestormIA — Firestorm con traducción automática por IA
+
+            Visor de Second Life con traducción automática en tiempo real usando **Groq** (Llama 3.3, gratis).
+
+            ### Cómo instalar
+            1. Descargá **FirestormIA-Setup.exe**
+            2. Ejecutalo y seguí el asistente (no necesita ser administrador)
+            3. En el **primer inicio** se abre la configuración de traducción:
+               - Creá una cuenta gratuita en [console.groq.com](https://console.groq.com/keys)
+               - Ingresá tu API key cuando se la pida
+
+            ### Características
+            - Traducción automática en chats locales, IMs privados y grupos
+            - Botón **[IA]** para activar/desactivar la traducción por ventana
+            - 75.000 caracteres/día gratis con Groq
+            - No requiere permisos de administrador
 
       - name: Upload build logs on failure
         if: failure()
